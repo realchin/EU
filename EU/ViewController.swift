@@ -11,91 +11,91 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addBarButton: UIBarButtonItem!
     
-    var members = ["Austria",
-                   "Belgium",
-                   "Bulgaria",
-                   "Croatia",
-                   "Cyprus",
-                   "Czechia",
-                   "Denmark",
-                   "Estonia",
-                   "Finland",
-                   "France",
-                   "Germany",
-                   "Greece",
-                   "Hungary",
-                   "Ireland",
-                   "Italy",
-                   "Latvia",
-                   "Lithuania",
-                   "Luxembourg",
-                   "Malta",
-                   "Netherlands",
-                   "Poland",
-                   "Portugal",
-                   "Romania",
-                   "Slovakia",
-                   "Slovenia",
-                   "Spain",
-                   "Sweden",
-                   "United Kingdom"]
-    
-    var capitals = ["Vienna",
-                    "Brussels",
-                    "Sofia",
-                    "Zagreb",
-                    "Nicosia",
-                    "Prague",
-                    "Copenhagen",
-                    "Tallinn",
-                    "Helsinki",
-                    "Paris",
-                    "Berlin",
-                    "Athens",
-                    "Budapest",
-                    "Dublin",
-                    "Rome",
-                    "Riga",
-                    "Vilnius",
-                    "Luxembourg (city)",
-                    "Valetta",
-                    "Amsterdam",
-                    "Warsaw",
-                    "Lisbon",
-                    "Bucharest",
-                    "Bratislava",
-                    "Ljubljana",
-                    "Madrid",
-                    "Stockholm",
-                    "London"]
-    var usesEuro = [true,
-                    true,
-                    false,
-                    false,
-                    true,
-                    false,
-                    false,
-                    true,
-                    true,
-                    true,
-                    true,
-                    true,
-                    false,
-                    true,
-                    true,
-                    true,
-                    true,
-                    true,
-                    true,
-                    true,
-                    false,
-                    true,
-                    false,
-                    true,
-                    true,
-                    true,
-                    false,
-                    false]
+//    var members = ["Austria",
+//                   "Belgium",
+//                   "Bulgaria",
+//                   "Croatia",
+//                   "Cyprus",
+//                   "Czechia",
+//                   "Denmark",
+//                   "Estonia",
+//                   "Finland",
+//                   "France",
+//                   "Germany",
+//                   "Greece",
+//                   "Hungary",
+//                   "Ireland",
+//                   "Italy",
+//                   "Latvia",
+//                   "Lithuania",
+//                   "Luxembourg",
+//                   "Malta",
+//                   "Netherlands",
+//                   "Poland",
+//                   "Portugal",
+//                   "Romania",
+//                   "Slovakia",
+//                   "Slovenia",
+//                   "Spain",
+//                   "Sweden",
+//                   "United Kingdom"]
+//
+//    var capitals = ["Vienna",
+//                    "Brussels",
+//                    "Sofia",
+//                    "Zagreb",
+//                    "Nicosia",
+//                    "Prague",
+//                    "Copenhagen",
+//                    "Tallinn",
+//                    "Helsinki",
+//                    "Paris",
+//                    "Berlin",
+//                    "Athens",
+//                    "Budapest",
+//                    "Dublin",
+//                    "Rome",
+//                    "Riga",
+//                    "Vilnius",
+//                    "Luxembourg (city)",
+//                    "Valetta",
+//                    "Amsterdam",
+//                    "Warsaw",
+//                    "Lisbon",
+//                    "Bucharest",
+//                    "Bratislava",
+//                    "Ljubljana",
+//                    "Madrid",
+//                    "Stockholm",
+//                    "London"]
+//    var usesEuro = [true,
+//                    true,
+//                    false,
+//                    false,
+//                    true,
+//                    false,
+//                    false,
+//                    true,
+//                    true,
+//                    true,
+//                    true,
+//                    true,
+//                    false,
+//                    true,
+//                    true,
+//                    true,
+//                    true,
+//                    true,
+//                    true,
+//                    true,
+//                    false,
+//                    true,
+//                    false,
+//                    true,
+//                    true,
+//                    true,
+//                    false,
+//                    false]
     
     
     var nations: [Nation] = []
@@ -106,11 +106,42 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        for index in 0..<members.count {
-            let newNation = Nation(country: members[index], capital: capitals[index], usesEuro: usesEuro[index])
-            nations.append(newNation)
+//        for index in 0..<members.count {
+//            let newNation = Nation(country: members[index], capital: capitals[index], usesEuro: usesEuro[index])
+//            nations.append(newNation)
+//        }
+        loadData()
+    }
+    
+    func loadData() {
+        
+        let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let documentURL = directoryURL.appendingPathComponent("nations").appendingPathExtension("json")
+        
+        guard let data = try? Data(contentsOf: documentURL) else {return}
+        let jsonDecoder = JSONDecoder()
+        do {
+            nations = try jsonDecoder.decode(Array<Nation>.self, from: data)
+            tableView.reloadData()
+        } catch {
+            print("🤬 ERROR: Could not save data \(error.localizedDescription)")
         }
     }
+    // creating a DirectoryURL
+    func saveData() {
+        
+        let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let documentURL = directoryURL.appendingPathComponent("nations").appendingPathExtension("json")
+        let jsonEncoder = JSONEncoder()
+        let data = try? jsonEncoder.encode(nations)
+        do {
+            try data?.write(to: documentURL, options: .noFileProtection)
+        } catch {
+            print("🤬 ERROR: Could not save data \(error.localizedDescription)")
+        }
+        
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetail" {
@@ -146,7 +177,7 @@ class ViewController: UIViewController {
             tableView.scrollToRow(at: newIndexPath, at: .bottom, animated: true)
             
         }
-
+        saveData()
     }
     
     @IBAction func editButtonPressed(_ sender: UIBarButtonItem) {
@@ -191,6 +222,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             
             nations.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            saveData()
             
         }
     }
@@ -200,6 +232,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let itemToMove = nations[sourceIndexPath.row]
         nations.remove(at: sourceIndexPath.row)
         nations.insert(itemToMove, at: destinationIndexPath.row)
+        saveData()
         
     }
     
