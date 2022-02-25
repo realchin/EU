@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0021637927C97D7A00E83B1E /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0021637827C97D7A00E83B1E /* ListTableViewCell.swift */; };
 		00DF0AFD27BEF72800536A04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DF0AFC27BEF72800536A04 /* AppDelegate.swift */; };
 		00DF0AFF27BEF72800536A04 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DF0AFE27BEF72800536A04 /* SceneDelegate.swift */; };
 		00DF0B0127BEF72800536A04 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00DF0B0027BEF72800536A04 /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0021637827C97D7A00E83B1E /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		00DF0AF927BEF72800536A04 /* EU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00DF0AFC27BEF72800536A04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00DF0AFE27BEF72800536A04 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 				00F6982827C03966005E6146 /* Nation.swift */,
 				00DF0B0027BEF72800536A04 /* ViewController.swift */,
 				00DF0B1227BF0B1700536A04 /* DetailTableViewController.swift */,
+				0021637827C97D7A00E83B1E /* ListTableViewCell.swift */,
 				00DF0B0227BEF72800536A04 /* Main.storyboard */,
 				00DF0B0527BEF72900536A04 /* Assets.xcassets */,
 				00DF0B0727BEF72900536A04 /* LaunchScreen.storyboard */,
@@ -149,6 +152,7 @@
 				00F6982927C03966005E6146 /* Nation.swift in Sources */,
 				00DF0AFD27BEF72800536A04 /* AppDelegate.swift in Sources */,
 				00DF0AFF27BEF72800536A04 /* SceneDelegate.swift in Sources */,
+				0021637927C97D7A00E83B1E /* ListTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
